@@ -26,11 +26,7 @@ module.exports = {
             CREATE TABLE cities (city_id SERIAL PRIMARY KEY,
                 name VARCHAR(100),
                 rating INT,
-                country_id INT
-            // SELECT country_id
-            // FROM cities
-            // JOIN countries
-            // ON cities.country_id = countries.country_id
+                country_id INT NOT NULL REFERENCE countries(country_id)
             );
 
             insert into countries (name)
