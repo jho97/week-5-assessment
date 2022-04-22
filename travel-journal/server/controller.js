@@ -23,7 +23,8 @@ module.exports = {
                 name varchar
             );
 
-            CREATE TABLE cities (city_id SERIAL PRIMARY KEY,
+            CREATE TABLE cities (
+                city_id SERIAL PRIMARY KEY,
                 name VARCHAR(100),
                 rating INT,
                 country_id INT NOT NULL REFERENCE countries(country_id)
