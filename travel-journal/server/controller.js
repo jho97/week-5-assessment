@@ -23,15 +23,14 @@ module.exports = {
                 name varchar
             );
 
-            CREATE TABLE cities
-                (city_id SERIAL PRIMARY KEY,
+            CREATE TABLE cities (city_id SERIAL PRIMARY KEY,
                 name VARCHAR(100),
                 rating INT,
                 country_id INT
-            SELECT country_id
-            FROM cities
-            JOIN countries
-            ON  cities.country_id = countries.country_id
+            // SELECT country_id
+            // FROM cities
+            // JOIN countries
+            // ON cities.country_id = countries.country_id
             );
 
             insert into countries (name)
@@ -244,9 +243,22 @@ module.exports = {
     createCity: (req, res) => {
         let {cityId} = req.body;
         sequelize.query(`
-        INSERT INTO cities (name, rating, countryId) 
-        WHERE city_id = ${cityId}
+        INSERT INTO cities (name, rating, country_id) 
+        VALUES city_id = ${cityId}
         `).then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log(err))
+    },
+    getCities: (req, res) => {
+        sequelize.query(`
+        SELECT * FROM countries AS country
+        JOIN cities AS city
+        ON city.city_id = country.country_id
+        `).then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log(err))
+    },
+    deleteCity: (req, res) => {
+        sequelize.query(`
+
+        `)
     }
 }
