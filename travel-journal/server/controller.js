@@ -1,8 +1,16 @@
 require('dotenv').config();
 const Sequelize = require('sequelize')
 
-
 const {CONNECTION_STRING} = process.env;
+
+const sequelize = new Sequelize(CONNECTION_STRING, {
+    dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                rejectUnauthorized: false
+      }
+  }
+})
 
 module.exports = {
     seed: (req, res) => {
@@ -15,7 +23,12 @@ module.exports = {
                 name varchar
             );
 
-            *****YOUR CODE HERE*****
+            CREATE TABLE cities (
+                city_id SERIAL PRIMARY KEY,
+                name VARCHAR(100),
+                rating INT,
+                country_id INT
+            );
 
             insert into countries (name)
             values ('Afghanistan'),
@@ -217,5 +230,12 @@ module.exports = {
             console.log('DB seeded!')
             res.sendStatus(200)
         }).catch(err => console.log('error seeding DB', err))
-    }
+    },
+    getCountries: (req, res) => {
+        sequelize.query(`
+        SELECT * FROM countries
+        `).then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log(err))
+    },
+    
 }
